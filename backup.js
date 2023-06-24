@@ -24,8 +24,7 @@ displayLiftFloors(liftOne, liftTwo)
 const displayFloorNumber = function(floorNumber) {
     if (floorNumber == 0) {
         title.innerHTML = `At the moment, you are on the ground floor`
-    } 
-    if (floorNumber == 1) {
+    } else if (floorNumber == 1) {
         title.innerHTML = `At the moment, you are on the ${floorNumber}st floor`
     } else if (floorNumber == 2) {
         title.innerHTML = `At the moment, you are on the ${floorNumber}nd floor`
@@ -81,23 +80,21 @@ const whichLift = function (floorNumber, liftOne, liftTwo) {
         } else {
             arrowDownOne.classList.remove("hidden")
         }
-        return liftOne
-    } 
-    if (Math.abs(floorNumber - liftOne) > Math.abs(floorNumber - liftTwo)) {
+        return "one"
+    } else if (Math.abs(floorNumber - liftOne) > Math.abs(floorNumber - liftTwo)) {
         if (floorNumber > liftTwo) {
             arrowUpTwo.classList.remove("hidden")
         } else {
             arrowDownTwo.classList.remove("hidden")
         }
-        return liftTwo
-    } 
-    if (Math.abs(floorNumber - liftOne) == Math.abs(floorNumber - liftTwo)) {
+        return "two"
+    } else {
         if (liftOne < liftTwo) {
             arrowUpOne.classList.remove("hidden")
-            return liftOne
+            return "one"
         } else if (liftTwo < liftOne) {
             arrowUpTwo.classList.remove("hidden")            
-            return liftTwo
+            return "two"
         }
     }
 }
