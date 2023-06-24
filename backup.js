@@ -34,13 +34,10 @@ function displayFloorNumber(floorNumber) {
 }
 
 function hideArrow(floorNumber, lift) {
-    if (liftNumber === liftOne) {
-        arrowUpOne.classList.add("hidden")
-        arrowDownOne.classList.add("hidden")
-    } else {
-        arrowUpTwo.classList.add("hidden")
-        arrowDownTwo.classList.add("hidden")
-    }
+    arrowUpOne.style.borderBottom = "30px solid #000033"
+    arrowDownOne.style.borderTop = "30px solid #000033"
+    arrowUpTwo.style.borderBottom = "30px solid #000033"
+    arrowDownTwo.style.borderTop = "30px solid #000033"
 }
 
 buttonArrays.forEach(btn => {
@@ -51,48 +48,50 @@ buttonArrays.forEach(btn => {
       }
       displayFloorNumber(floorNumber)
       let liftNumber = whichLift(floorNumber, liftOne, liftTwo)
-      console.log(liftNumber)
-      console.log(floorNumber)
+      console.log(liftNumber);
       console.log(liftOne)
       console.log(liftTwo)
       if (liftNumber == liftOne) {
-        liftOne = liftToCustomer(floorNumber, liftOne, liftOneFloor)
-        hideArrow(floorNumber, liftOne)
+        liftOne = liftToCustomer(floorNumber, liftOne, liftOneFloor, liftNumber)
       } else if (liftNumber == liftTwo) {
-        liftTwo = liftToCustomer(floorNumber, liftTwo, liftTwoFloor)
-        hideArrow(floorNumber, liftTwo)
+        liftTwo = liftToCustomer(floorNumber, liftTwo, liftTwoFloor, liftNumber)
       }
+      console.log(liftOne)
+      console.log(liftTwo)
     })
 })
 
-function liftToCustomer(floorNumber, liftFloor, liftFloorDisplay) {
-    while (liftFloor != floorNumber) {
+function liftToCustomer(floorNumber, liftFloor, liftFloorDisplay, liftNumber) {
+    let countFloor = setInterval(() => {
+        console.log(floorNumber)
         console.log(liftFloor)
-        if (liftFloor < floorNumber) {
+        if (liftFloor == floorNumber) {
+            clearInterval(countFloor)
+            hideArrow(floorNumber, liftNumber)
+        } else if (liftFloor < floorNumber) {
             liftFloor++
         } else {
             liftFloor--
         }
         displayLiftFloors(liftFloorDisplay, liftFloor)
-    }
-    return liftFloor
-
+    }, 1000)
+    return floorNumber
 }
 function showArrow(floorNumber, lift) {
     if (lift == liftOne) {
         if (lift < floorNumber) {
-            arrowUpOne.classList.remove("hidden")
+            arrowUpOne.style.borderBottom = "30px solid #00f0ff"
         } 
         if (lift > floorNumber) {
-            arrowDownOne.classList.remove("hidden")
+            arrowDownOne.style.borderTop = "30px solid #00f0ff"
         }
     } 
     if (lift == liftTwo) {
         if (lift < floorNumber) {
-            arrowUpTwo.classList.remove("hidden")
+            arrowUpTwo.style.borderBottom = "30px solid #00f0ff"
         } 
         if (lift > floorNumber) {
-            arrowDownTwo.classList.remove("hidden")
+            arrowDownTwo.style.borderTop = "30px solid #00f0ff"
         }
     }
 }
