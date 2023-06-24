@@ -2,10 +2,13 @@
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
+body {
+    background-color: #FF8000;
+}
+
 .wrapper {
     width: 100%;
     height: auto;
-    background-color: #FF8000;
 }
 
 .title {
@@ -108,15 +111,57 @@
     margin-top: 1rem;
 }
 
-.lineUp {
-    width: 5px;
-    height: 50px;
-    margin-left: 1.465rem;
+.getIn {
+    color: #000033;
+    background-color: #00f0ff;
+    width: 6rem;
+    height: 4rem;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 3px 3px #000;
+    margin-top: 3rem;
 }
 
-.lineDown {
-    width: 5px;
-    height: 50px;
-    margin-left: 1.465rem;
-    margin-top: 1rem;
+.getIn:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+    transition: 0.3s;
+}
+
+.getInText {
+    text-align: center;
+    padding-top: 0.7rem;
+}
+
+.floorButtons {
+    display: flex;
+}
+
+.floorButton {
+    display: block;
+    color: #000033;
+    background-color: #00f0ff;
+    width: 6rem;
+    height: 4rem;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 3px 3px #000;   
+    text-align: center;
+    padding-top: 0.7rem;
+    font-style: 700;
+}
+
+.floorButton:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+    transition: 0.3s;
+}
+
+.elevatorText {
+    text-align: center;
+    margin-top: 4rem;
+}
+
+.hidden {
+    display: none;
 }

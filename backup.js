@@ -11,6 +11,9 @@ let arrowUpOne = document.getElementById("arrowUpOne")
 let arrowUpTwo = document.getElementById("arrowUpTwo")
 let arrowDownOne = document.getElementById("arrowDownOne")
 let arrowDownTwo = document.getElementById("arrowDownTwo")
+let getInButton = document.getElementById("getIn")
+let floorButtons = document.getElementById("floorButtons")
+let elevatorText = document.getElementById("elevatorText")
 
 liftOneFloor.innerHTML = liftOne
 liftTwoFloor.innerHTML = liftTwo
@@ -68,6 +71,7 @@ function liftToCustomer(floorNumber, liftFloor, liftFloorDisplay, liftNumber) {
         if (liftFloor == floorNumber) {
             clearInterval(countFloor)
             hideArrow(floorNumber, liftNumber)
+            getIn()
         } else if (liftFloor < floorNumber) {
             liftFloor++
         } else {
@@ -108,4 +112,12 @@ function whichLift(floorNumber, liftOne, liftTwo) {
         showArrow(floorNumber, minLift)
         return minLift        
     }
+}
+
+function getIn() {
+    getInButton.classList.remove("hidden")
+    getInButton.addEventListener("click", function() {
+        elevatorText.classList.remove("hidden")
+        floorButtons.classList.remove("hidden")
+    })
 }
