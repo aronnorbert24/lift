@@ -55,7 +55,7 @@ buttonArrays.forEach(btn => {
       let liftNumber = whichLift(floorNumber, liftOne, liftTwo)
       if (liftNumber == liftOne) {
         liftToCustomer(floorNumber, liftNumber, liftOneFloor)
-      } else {
+      } else if (liftNumber == liftTwo) {
         liftToCustomer(floorNumber, liftNumber, liftTwoFloor)
       }
     })
@@ -80,22 +80,21 @@ const whichLift = function (floorNumber, liftOne, liftTwo) {
         } else {
             arrowDownOne.classList.remove("hidden")
         }
-        return "one"
+        return liftOne
     } else if (Math.abs(floorNumber - liftOne) > Math.abs(floorNumber - liftTwo)) {
         if (floorNumber > liftTwo) {
             arrowUpTwo.classList.remove("hidden")
         } else {
             arrowDownTwo.classList.remove("hidden")
         }
-        return "two"
+        return liftTwo
     } else {
         if (liftOne < liftTwo) {
             arrowUpOne.classList.remove("hidden")
-            return "one"
+            return liftOne
         } else if (liftTwo < liftOne) {
             arrowUpTwo.classList.remove("hidden")            
-            return "two"
+            return liftTwo
         }
     }
 }
-

@@ -23,6 +23,7 @@ class Elevator {
             btn.addEventListener("click", () => {
               this.whichFloor()
               this.displayFloorNumber(floorNumber)
+              this.displayLiftFloors(this.liftOne, this.liftTwo)
             })
         })
     }
@@ -47,7 +48,8 @@ class Elevator {
     }
 
     displayLiftFloors(liftOne, liftTwo) {
-        liftOne.innerHTML = liftOne
+        liftOneFloor.innerHTML = liftOne
+        liftTwoFloor.innerHTML = liftTwo
     }
     
 }
