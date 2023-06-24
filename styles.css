@@ -1,0 +1,129 @@
+* {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.wrapper {
+    width: 100%;
+    height: auto;
+    background-color: #FF8000;
+}
+
+.title {
+    text-align: center;
+}
+
+.lift {
+    width: 100%;
+    display: flex;
+}
+
+.liftOne {
+    display: block;
+}
+
+.liftTwo {
+    display: block;
+    margin-left: auto;
+}
+
+.buttons {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.buttonUp {
+    height: 0;
+    width: 0;
+    border-bottom: 100px solid #000033;
+    border-right: 100px solid transparent;
+    border-left: 100px solid transparent;
+    margin: 2rem;
+}
+
+.buttonUp:hover {
+    transform: scale(1.15);
+    transition-duration: 0.5s;
+    border-bottom: 100px solid #f3ff00;
+    cursor: pointer;
+    
+}
+
+.buttonDown:hover {
+    transform: scale(1.15);
+    transition-duration: 0.5s;
+    border-top: 100px solid #f3ff00;
+    cursor: pointer;
+}
+
+.buttonDown {
+    height: 0;
+    width: 0;
+    border-top: 100px solid #000033;
+    border-right: 100px solid transparent;
+    border-left: 100px solid transparent;
+    margin: 2rem;
+}
+
+.display {
+    height: 100px;
+    width: 200px;
+    background-color: #000;
+    margin: 2rem;
+    display: flex;
+}
+
+.floorNumberOne, .floorNumberTwo {
+    display: block;
+    color: #00f0ff;
+    margin-left: auto;
+    margin-right: 85px;
+    font-size: 2.25rem;
+    text-align: center;
+}
+
+.arrowUpOne, .arrowUpTwo {
+    display: block;
+}
+
+.arrowDownOne, .arrowDownTwo {
+    display: block;
+}
+
+.hidden {
+    displaY: none;
+}
+
+.lineUp {
+    width: 5px;
+    height: 50px;
+    background-color: #00f0ff;
+    margin-left: 1.465rem;
+}
+
+.lineDown {
+    width: 5px;
+    height: 50px;
+    background-color: #00f0ff;
+    margin-left: 1.465rem;
+    margin-top: 1rem;
+}
+
+.up {
+    height: 0;
+    width: 0;
+    border-bottom: 10px solid #00f0ff;
+    border-right: 10px solid transparent;
+    border-left: 10px solid transparent;
+    margin-left: 1rem;
+    margin-top: 1rem;
+}
+
+.down {
+    height: 0;
+    width: 0;
+    border-top: 10px solid #00f0ff;
+    border-right: 10px solid transparent;
+    border-left: 10px solid transparent;
+    margin-left: 1rem;
+}
