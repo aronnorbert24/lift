@@ -15,13 +15,11 @@ let arrowDownTwo = document.getElementById("arrowDownTwo")
 liftOneFloor.innerHTML = liftOne
 liftTwoFloor.innerHTML = liftTwo
 
-const displayLiftFloors = function(liftNumber, liftFloor) {
+function displayLiftFloors(liftNumber, liftFloor) {
     liftNumber.innerHTML = liftFloor
 }
 
-displayLiftFloors(liftOne, liftTwo)
-
-const displayFloorNumber = function(floorNumber) {
+function displayFloorNumber(floorNumber) {
     if (floorNumber == 0) {
         title.innerHTML = `At the moment, you are on the ground floor`
     } else if (floorNumber == 1) {
@@ -35,7 +33,7 @@ const displayFloorNumber = function(floorNumber) {
     }
 }
 
-const hide = function(liftNumber) {
+function hideArrow(floorNumber, lift) {
     if (liftNumber === liftOne) {
         arrowUpOne.classList.add("hidden")
         arrowDownOne.classList.add("hidden")
@@ -48,53 +46,67 @@ const hide = function(liftNumber) {
 buttonArrays.forEach(btn => {
     btn.addEventListener("click", function() {
       let floorNumber = prompt("Which floor are you on?")
-      while (floorNumber < 0 || floorNumber > 6) {
+      while (floorNumber < 0 || floorNumber > 6 || floorNumber == null) {
         floorNumber = prompt("Error! Invalid floor number.")
       }
       displayFloorNumber(floorNumber)
       let liftNumber = whichLift(floorNumber, liftOne, liftTwo)
+      console.log(liftNumber)
+      console.log(floorNumber)
+      console.log(liftOne)
+      console.log(liftTwo)
       if (liftNumber == liftOne) {
-        liftToCustomer(floorNumber, liftNumber, liftOneFloor)
+        liftOne = liftToCustomer(floorNumber, liftOne, liftOneFloor)
+        hideArrow(floorNumber, liftOne)
       } else if (liftNumber == liftTwo) {
-        liftToCustomer(floorNumber, liftNumber, liftTwoFloor)
+        liftTwo = liftToCustomer(floorNumber, liftTwo, liftTwoFloor)
+        hideArrow(floorNumber, liftTwo)
       }
     })
 })
 
-const liftToCustomer = function(floorNumber, liftFloor, liftFloorDisplay) {
-        while (liftFloor != floorNumber) {
-                if (liftFloor < floorNumber) {
-                    liftFloor++;
-                } else {
-                    liftFloor--;
-                }
-                    displayLiftFloors(liftFloorDisplay, liftFloor)
-        }
-        hide(liftFloor)
-}
-
-const whichLift = function (floorNumber, liftOne, liftTwo) {
-    if (Math.abs(floorNumber - liftOne) < Math.abs(floorNumber - liftTwo)) {
-        if (floorNumber > liftOne) {
-            arrowUpOne.classList.remove("hidden")
+function liftToCustomer(floorNumber, liftFloor, liftFloorDisplay) {
+    while (liftFloor != floorNumber) {
+        console.log(liftFloor)
+        if (liftFloor < floorNumber) {
+            liftFloor++
         } else {
+            liftFloor--
+        }
+        displayLiftFloors(liftFloorDisplay, liftFloor)
+    }
+    return liftFloor
+
+}
+function showArrow(floorNumber, lift) {
+    if (lift == liftOne) {
+        if (lift < floorNumber) {
+            arrowUpOne.classList.remove("hidden")
+        } 
+        if (lift > floorNumber) {
             arrowDownOne.classList.remove("hidden")
         }
-        return liftOne
-    } else if (Math.abs(floorNumber - liftOne) > Math.abs(floorNumber - liftTwo)) {
-        if (floorNumber > liftTwo) {
+    } 
+    if (lift == liftTwo) {
+        if (lift < floorNumber) {
             arrowUpTwo.classList.remove("hidden")
-        } else {
+        } 
+        if (lift > floorNumber) {
             arrowDownTwo.classList.remove("hidden")
         }
+    }
+}
+
+function whichLift(floorNumber, liftOne, liftTwo) {
+    if (Math.abs(floorNumber - liftOne) < Math.abs(floorNumber - liftTwo)) {
+        showArrow(floorNumber, liftOne)
+        return liftOne
+    } else if (Math.abs(floorNumber - liftOne) > Math.abs(floorNumber - liftTwo)) {
+        showArrow(floorNumber, liftTwo)
         return liftTwo
-    } else {
-        if (liftOne < liftTwo) {
-            arrowUpOne.classList.remove("hidden")
-            return liftOne
-        } else if (liftTwo < liftOne) {
-            arrowUpTwo.classList.remove("hidden")            
-            return liftTwo
-        }
+    } else if (Math.abs(floorNumber - liftOne) == Math.abs(floorNumber - liftTwo)) {
+        let minLift = Math.min(liftOne, liftTwo)
+        showArrow(floorNumber, minLift)
+        return minLift        
     }
 }
