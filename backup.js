@@ -14,6 +14,14 @@ let arrowDownTwo = document.getElementById("arrowDownTwo")
 let getInButton = document.getElementById("getIn")
 let floorButtons = document.getElementById("floorButtons")
 let elevatorText = document.getElementById("elevatorText")
+let floorZero = document.getElementById("floorZero")
+let floorOne = document.getElementById("floorOne")
+let floorTwo = document.getElementById("floorTwo")
+let floorThree = document.getElementById("floorThree")
+let floorFour = document.getElementById("floorFour")
+let floorFive = document.getElementById("floorFive")
+let floorSix = document.getElementById("floorSix")
+let floorButton = [floorZero, floorOne, floorTwo, floorThree, floorFour, floorFive, floorSix]
 
 liftOneFloor.innerHTML = liftOne
 liftTwoFloor.innerHTML = liftTwo
@@ -36,7 +44,7 @@ function displayFloorNumber(floorNumber) {
     }
 }
 
-function hideArrow(floorNumber, lift) {
+function hideArrow() {
     arrowUpOne.style.borderBottom = "30px solid #000033"
     arrowDownOne.style.borderTop = "30px solid #000033"
     arrowUpTwo.style.borderBottom = "30px solid #000033"
@@ -51,27 +59,23 @@ buttonArrays.forEach(btn => {
       }
       displayFloorNumber(floorNumber)
       let liftNumber = whichLift(floorNumber, liftOne, liftTwo)
-      console.log(liftNumber);
-      console.log(liftOne)
-      console.log(liftTwo)
-      if (liftNumber == liftOne) {
+      if (liftNumber == "one") {
         liftOne = liftToCustomer(floorNumber, liftOne, liftOneFloor, liftNumber)
-      } else if (liftNumber == liftTwo) {
+      } else if (liftNumber == "two") {
         liftTwo = liftToCustomer(floorNumber, liftTwo, liftTwoFloor, liftNumber)
       }
-      console.log(liftOne)
-      console.log(liftTwo)
     })
 })
 
 function liftToCustomer(floorNumber, liftFloor, liftFloorDisplay, liftNumber) {
     let countFloor = setInterval(() => {
         console.log(floorNumber)
-        console.log(liftFloor)
+        console.log(liftFloor);
         if (liftFloor == floorNumber) {
             clearInterval(countFloor)
-            hideArrow(floorNumber, liftNumber)
-            getIn()
+            hideArrow()
+            getIn(liftNumber)
+            displayFloorNumber(floorNumber)
         } else if (liftFloor < floorNumber) {
             liftFloor++
         } else {
@@ -103,21 +107,41 @@ function showArrow(floorNumber, lift) {
 function whichLift(floorNumber, liftOne, liftTwo) {
     if (Math.abs(floorNumber - liftOne) < Math.abs(floorNumber - liftTwo)) {
         showArrow(floorNumber, liftOne)
-        return liftOne
+        return "one"
     } else if (Math.abs(floorNumber - liftOne) > Math.abs(floorNumber - liftTwo)) {
         showArrow(floorNumber, liftTwo)
-        return liftTwo
+        return "two"
     } else if (Math.abs(floorNumber - liftOne) == Math.abs(floorNumber - liftTwo)) {
         let minLift = Math.min(liftOne, liftTwo)
         showArrow(floorNumber, minLift)
-        return minLift        
+        if (minLift == liftOne) return "one"
+        else return "two"        
     }
 }
 
-function getIn() {
+function travel(liftNumber) {
+    floorButton.forEach(floor => {
+        floor.addEventListener("click", function() {
+            if (liftNumber == "one") {
+                showArrow(floor.innerHTML, liftOne)
+                liftOne = liftToCustomer(floor.innerHTML, liftOne, liftOneFloor, liftNumber)
+            } else if (liftNumber == "two") {
+                showArrow(floor.innerHTML, liftTwo)
+                liftTwo = liftToCustomer(floor.innerHTML, liftTwo, liftTwoFloor, liftNumber)
+            }
+        elevatorText.classList.add("hidden")
+        floorButtons.classList.add("hidden") 
+        getInButton.classList.add("hidden")  
+        console.log(liftOne)  
+        })
+    }) 
+}
+
+function getIn(liftNumber) {
     getInButton.classList.remove("hidden")
     getInButton.addEventListener("click", function() {
         elevatorText.classList.remove("hidden")
         floorButtons.classList.remove("hidden")
+        travel(liftNumber)   
     })
 }

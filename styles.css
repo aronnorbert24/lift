@@ -22,11 +22,13 @@ body {
 
 .liftOne {
     display: block;
+    margin-top: 60px;
 }
 
 .liftTwo {
     display: block;
     margin-left: auto;
+    margin-top: 60px;
 }
 
 .buttons {
@@ -164,4 +166,41 @@ body {
 
 .hidden {
     display: none;
+}
+
+@media (min-width: 1000px) {
+    .buttons {
+        margin-left: 105px;
+        margin-right: auto;
+    } 
+}
+
+@media (min-width: 1200px) {
+    .buttons {
+        margin-left: 105px;
+        margin-right: auto;
+    } 
+
+    .liftOne {
+        margin-left: 100px;
+    }
+
+    .liftTwo {
+        margin-right: 100px;
+    }
+}
+
+@media (min-width: 1500px) {
+    .buttons {
+        margin-left: 195px;
+        margin-right: auto;
+    } 
+
+    .liftOne {
+        margin-left: 200px;
+    }
+
+    .liftTwo {
+        margin-right: 200px;
+    }
 }

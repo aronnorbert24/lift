@@ -13,6 +13,17 @@ let arrowUpOne = document.getElementById("arrowUpOne")
 let arrowUpTwo = document.getElementById("arrowUpTwo")
 let arrowDownOne = document.getElementById("arrowDownOne")
 let arrowDownTwo = document.getElementById("arrowDownTwo")
+let getInButton = document.getElementById("getIn")
+let floorButtons = document.getElementById("floorButtons")
+let elevatorText = document.getElementById("elevatorText")
+let floorZero = document.getElementById("floorZero")
+let floorOne = document.getElementById("floorOne")
+let floorTwo = document.getElementById("floorTwo")
+let floorThree = document.getElementById("floorThree")
+let floorFour = document.getElementById("floorFour")
+let floorFive = document.getElementById("floorFive")
+let floorSix = document.getElementById("floorSix")
+let floorButton = [floorZero, floorOne, floorTwo, floorThree, floorFour, floorFive, floorSix]
 
 liftOneFloor.innerHTML = liftOne
 liftTwoFloor.innerHTML = liftTwo
@@ -34,17 +45,14 @@ function displayFloorNumber(floorNumber) {
         title.innerHTML = `At the moment, you are on the ${floorNumber}th floor`
     }
 }
-/*
+
 function hideArrow(floorNumber, lift) {
-    if (liftNumber === liftOne) {
-        arrowUpOne.classList.add("hidden")
-        arrowDownOne.classList.add("hidden")
-    } else {
-        arrowUpTwo.classList.add("hidden")
-        arrowDownTwo.classList.add("hidden")
-    }
+    arrowUpOne.style.borderBottom = "30px solid #000033"
+    arrowDownOne.style.borderTop = "30px solid #000033"
+    arrowUpTwo.style.borderBottom = "30px solid #000033"
+    arrowDownTwo.style.borderTop = "30px solid #000033"
 }
-*/
+
 buttonArrays.forEach(btn => {
     btn.addEventListener("click", function() {
       let floorNumber = prompt("Which floor are you on?")
@@ -53,47 +61,51 @@ buttonArrays.forEach(btn => {
       }
       displayFloorNumber(floorNumber)
       let liftNumber = whichLift(floorNumber, liftOne, liftTwo)
-      console.log(liftNumber)
-      console.log(floorNumber)
+      console.log(liftNumber);
       console.log(liftOne)
       console.log(liftTwo)
       if (liftNumber == liftOne) {
-        liftOne = liftToCustomer(floorNumber, liftOne, liftOneFloor)
-        hide()
+        liftOne = liftToCustomer(floorNumber, liftOne, liftOneFloor, liftNumber)
       } else if (liftNumber == liftTwo) {
-        liftTwo = liftToCustomer(floorNumber, liftTwo, liftTwoFloor)
+        liftTwo = liftToCustomer(floorNumber, liftTwo, liftTwoFloor, liftNumber)
       }
+      console.log(liftOne)
+      console.log(liftTwo)
     })
 })
 
-function liftToCustomer(floorNumber, liftFloor, liftFloorDisplay) {
-    while (liftFloor != floorNumber) {
+function liftToCustomer(floorNumber, liftFloor, liftFloorDisplay, liftNumber) {
+    let countFloor = setInterval(() => {
+        console.log(floorNumber)
         console.log(liftFloor)
-        if (liftFloor < floorNumber) {
+        if (liftFloor == floorNumber) {
+            clearInterval(countFloor)
+            hideArrow(floorNumber, liftNumber)
+            getIn()
+        } else if (liftFloor < floorNumber) {
             liftFloor++
         } else {
             liftFloor--
         }
         displayLiftFloors(liftFloorDisplay, liftFloor)
-    }
-    return liftFloor
-
+    }, 1000)
+    return floorNumber
 }
 function showArrow(floorNumber, lift) {
     if (lift == liftOne) {
         if (lift < floorNumber) {
-            arrowUpOne.classList.remove("hidden")
+            arrowUpOne.style.borderBottom = "30px solid #00f0ff"
         } 
         if (lift > floorNumber) {
-            arrowDownOne.classList.remove("hidden")
+            arrowDownOne.style.borderTop = "30px solid #00f0ff"
         }
     } 
     if (lift == liftTwo) {
         if (lift < floorNumber) {
-            arrowUpTwo.classList.remove("hidden")
+            arrowUpTwo.style.borderBottom = "30px solid #00f0ff"
         } 
         if (lift > floorNumber) {
-            arrowDownTwo.classList.remove("hidden")
+            arrowDownTwo.style.borderTop = "30px solid #00f0ff"
         }
     }
 }
@@ -110,4 +122,22 @@ function whichLift(floorNumber, liftOne, liftTwo) {
         showArrow(floorNumber, minLift)
         return minLift        
     }
+}
+
+function getIn() {
+    getInButton.classList.remove("hidden")
+    getInButton.addEventListener("click", function() {
+        elevatorText.classList.remove("hidden")
+        floorButtons.classList.remove("hidden")
+        getInButton.classList.add("hidden")
+        travel(floorButton)
+    })
+}
+
+function travel(floorArray) {
+    floorArray.forEach(floor => {
+        floor.addEventListener("click", function() {
+          showArrow
+        })
+    })
 }
