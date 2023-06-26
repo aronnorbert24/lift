@@ -53,7 +53,7 @@ function hideArrow() {
 
 buttonArrays.forEach(btn => {
     btn.addEventListener("click", function() {
-        handleLift()
+      
     })
 })
 
@@ -75,26 +75,14 @@ function liftToCustomer(floorNumber, liftFloor, liftFloorDisplay, liftNumber) {
     }) 
 }
 
-async function handleLift() {
+async function handleLift(floorNumber, liftOne, liftTwo, liftNumber) {
     try {
-      let floorNumber = prompt("Which floor are you on?")
-      while (floorNumber < 0 || floorNumber > 6 || floorNumber == null) {
-        floorNumber = prompt("Error! Invalid floor number.")
-      }
-      displayFloorNumber(floorNumber)
-      console.log("Lift One is on floor" + liftOne)
-      console.log("Lift Two is on floor" + liftTwo)
-      let liftNumber = whichLift(floorNumber, liftOne, liftTwo)
+        console.log("Lift One is on floor" + liftOne)
+        console.log("Lift Two is on floor" + liftTwo)
         if (liftNumber == "one") {
-            liftOne = await liftToCustomer(floorNumber, liftOne, liftOneFloor, liftNumber)
-            hideArrow()
-            displayFloorNumber(floorNumber)
-            liftOne = await getIn(liftNumber, liftOne, liftTwo)
+            return await liftToCustomer(floorNumber, liftOne, liftOneFloor, liftNumber)
         } else {
-            liftTwo = await liftToCustomer(floorNumber, liftTwo, liftTwoFloor, liftNumber)
-            hideArrow()
-            displayFloorNumber(floorNumber)
-            liftTwo = await getIn(liftNumber, liftOne, liftTwo)
+            return await liftToCustomer(floorNumber, liftTwo, liftTwoFloor, liftNumber)
         }
     } catch (error) {
         console.log(error)
@@ -140,22 +128,18 @@ function travel(liftNumber, liftOne, liftTwo) {
     floorButton.forEach(floor => {
         floor.addEventListener("click", async function() {
             try {
-            console.log("Lift One is on floor" + liftOne)
-            console.log("Lift Two is on floor" + liftTwo)
             if (liftNumber == "one") {
                 showArrow(floor.innerHTML, liftOne)
-                var liftValue = await liftToCustomer(floor.innerHTML, liftOne, liftOneFloor, liftNumber)
+                liftOne = await liftToCustomer(floor.innerHTML, liftOne, liftOneFloor, liftNumber)
             } else {
                 showArrow(floor.innerHTML, liftTwo)
-                var liftValue = await liftToCustomer(floor.innerHTML, liftTwo, liftTwoFloor, liftNumber)
+                liftTwo = await liftToCustomer(floor.innerHTML, liftTwo, liftTwoFloor, liftNumber)
             }
-            hideArrow()
-            elevatorText.classList.add("hidden")
-            floorButtons.classList.add("hidden") 
-            getInButton.classList.add("hidden") 
-            console.log("Lift One is on floor" + liftValue)
-            console.log("Lift Two is on floor" + liftTwo)
-            return liftValue
+        elevatorText.classList.add("hidden")
+        floorButtons.classList.add("hidden") 
+        getInButton.classList.add("hidden") 
+        if (liftNumber == "one") return liftOne
+        else return liftTwo
         } catch (error) {
             console.log(error)
             console.log("We ran into a problem, Please be patient while we fix it.")
@@ -169,7 +153,7 @@ function getIn(liftNumber, liftOne, liftTwo) {
     getInButton.addEventListener("click", function() {
         elevatorText.classList.remove("hidden")
         floorButtons.classList.remove("hidden")
-        return travel(liftNumber, liftOne, liftTwo)
+        travel(liftNumber, liftOne, liftTwo)   
     })
     if (liftNumber == "one") return liftOne
     else return liftTwo
