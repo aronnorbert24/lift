@@ -53,9 +53,39 @@ function hideArrow() {
 
 buttonArrays.forEach(btn => {
     btn.addEventListener("click", function() {
-      
+        handleLift()
     })
 })
+
+function getIn(floorNumber, liftOne, liftTwo, liftNumber) {
+        elevatorText.classList.remove("hidden")
+        floorButtons.classList.remove("hidden")
+       for (const floor of floorButton) {
+            floor.addEventListener("click", async function() {
+                try {
+                    if (floorNumber == liftOne) {
+                        showArrow(floor.innerHTML, liftNumber, liftOne)
+                        liftOne = await liftToCustomer(floor.innerHTML, liftOne, liftOneFloor, liftNumber)
+                        hideArrow()
+                        elevatorText.classList.add("hidden")
+                        floorButtons.classList.add("hidden") 
+                        getInButton.classList.add("hidden") 
+                    } else {
+                        console.log(floorNumber);
+                        showArrow(floor.innerHTML, liftNumber, liftTwo)
+                        liftTwo = await liftToCustomer(floor.innerHTML, liftTwo, liftTwoFloor, liftNumber)
+                        hideArrow()
+                        elevatorText.classList.add("hidden")
+                        floorButtons.classList.add("hidden") 
+                        getInButton.classList.add("hidden") 
+                    }              
+                } catch (error) {
+                    console.log(error)
+                    console.log("We ran into a problem, Please be patient while we fix it.")
+                }
+            })
+    }
+    }
 
 function liftToCustomer(floorNumber, liftFloor, liftFloorDisplay, liftNumber) {
     return new Promise((resolve, reject) => {
@@ -75,23 +105,34 @@ function liftToCustomer(floorNumber, liftFloor, liftFloorDisplay, liftNumber) {
     }) 
 }
 
-async function handleLift(floorNumber, liftOne, liftTwo, liftNumber) {
+async function handleLift() {
     try {
-        console.log("Lift One is on floor" + liftOne)
-        console.log("Lift Two is on floor" + liftTwo)
+      let floorNumber = prompt("Which floor are you on?")
+      while (floorNumber < 0 || floorNumber > 6 || floorNumber == null) {
+        floorNumber = prompt("Error! Invalid floor number.")
+      }
+      displayFloorNumber(floorNumber)
+      let liftNumber = whichLift(floorNumber, liftOne, liftTwo)
         if (liftNumber == "one") {
-            return await liftToCustomer(floorNumber, liftOne, liftOneFloor, liftNumber)
+            showArrow(floorNumber, liftNumber, liftOne)
+            liftOne = await liftToCustomer(floorNumber, liftOne, liftOneFloor, liftNumber)
+            hideArrow()
+            displayFloorNumber(floorNumber)
         } else {
-            return await liftToCustomer(floorNumber, liftTwo, liftTwoFloor, liftNumber)
+            showArrow(floorNumber, liftNumber, liftTwo)
+            liftTwo = await liftToCustomer(floorNumber, liftTwo, liftTwoFloor, liftNumber)
+            hideArrow()
+            displayFloorNumber(floorNumber)
         }
+        getIn(floorNumber, liftOne, liftTwo, liftNumber)
     } catch (error) {
         console.log(error)
         console.log("We ran into a problem. Please be patient while we fix it.")
     }
 }
 
-function showArrow(floorNumber, lift) {
-    if (lift == liftOne) {
+function showArrow(floorNumber, liftNumber, lift) {
+    if (liftNumber == "one") {
         if (lift < floorNumber) {
             arrowUpOne.style.borderBottom = "30px solid #00f0ff"
         } 
@@ -99,7 +140,7 @@ function showArrow(floorNumber, lift) {
             arrowDownOne.style.borderTop = "30px solid #00f0ff"
         }
     } 
-    if (lift == liftTwo) {
+    if (liftNumber == "two") {
         if (lift < floorNumber) {
             arrowUpTwo.style.borderBottom = "30px solid #00f0ff"
         } 
@@ -111,50 +152,22 @@ function showArrow(floorNumber, lift) {
 
 function whichLift(floorNumber, liftOne, liftTwo) {
     if (Math.abs(floorNumber - liftOne) < Math.abs(floorNumber - liftTwo)) {
-        showArrow(floorNumber, liftOne)
         return "one"
     } else if (Math.abs(floorNumber - liftOne) > Math.abs(floorNumber - liftTwo)) {
-        showArrow(floorNumber, liftTwo)
         return "two"
+    } else if (liftOne === liftTwo) {
+        return "one"
     } else {
         let minLift = Math.min(liftOne, liftTwo)
-        showArrow(floorNumber, minLift)
         if (minLift == liftOne) return "one"
         else return "two"        
     }
 }
-
-function travel(liftNumber, liftOne, liftTwo) {
-    floorButton.forEach(floor => {
-        floor.addEventListener("click", async function() {
-            try {
-            if (liftNumber == "one") {
-                showArrow(floor.innerHTML, liftOne)
-                liftOne = await liftToCustomer(floor.innerHTML, liftOne, liftOneFloor, liftNumber)
-            } else {
-                showArrow(floor.innerHTML, liftTwo)
-                liftTwo = await liftToCustomer(floor.innerHTML, liftTwo, liftTwoFloor, liftNumber)
-            }
-        elevatorText.classList.add("hidden")
-        floorButtons.classList.add("hidden") 
-        getInButton.classList.add("hidden") 
-        if (liftNumber == "one") return liftOne
-        else return liftTwo
-        } catch (error) {
-            console.log(error)
-            console.log("We ran into a problem, Please be patient while we fix it.")
-        }
-        })
-    }) 
+/*
+async function travel(floor, liftNumber, liftOne, liftTwo) {
+    
 }
 
 function getIn(liftNumber, liftOne, liftTwo) {
-    getInButton.classList.remove("hidden")
-    getInButton.addEventListener("click", function() {
-        elevatorText.classList.remove("hidden")
-        floorButtons.classList.remove("hidden")
-        travel(liftNumber, liftOne, liftTwo)   
-    })
-    if (liftNumber == "one") return liftOne
-    else return liftTwo
-}
+        
+}*/
